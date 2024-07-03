@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
+app.use(logger);
 
 let courses = [
     { id: 1, name: 'java' },
@@ -46,6 +47,17 @@ app.delete('/courses/:id', (req, res) => {
     const deletedCourse = courses.splice(courseIndex, 1);
     res.send(deletedCourse[0]);
 });
+
+// Logger middleware
+function logger(req, res, next) {
+    const method = req.method;
+    const ip = req.ip;
+    const hostname = req.hostname;
+    const date = new Date().toISOString();
+
+    console.log(`[${date}] ${method} request from IP: ${ip}, Hostname: ${hostname}`);
+    next();
+}
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");
