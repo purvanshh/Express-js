@@ -15,14 +15,17 @@ let courses1 = [
     { id: 3, name: 'react native' }
 ];
 
+// Get all courses
 app.get('/courses', (req, res) => {
     res.json(courses);
 });
 
+// Get all courses1
 app.get('/courses1', (req, res) => {
     res.json(courses1);
 });
 
+// Add a new course
 app.post('/courses', (req, res) => {
     console.log(req.body);
     let singlecourse = {
@@ -31,6 +34,20 @@ app.post('/courses', (req, res) => {
     };
     courses.push(singlecourse);
     res.send(singlecourse);
+});
+
+app.put('/courses/:id', (req, res) => {
+    const courseId = parseInt(req.params.id);
+    const course = courses.find(c => c.id === courseId);
+    course.name = req.body.name;
+    res.send(course);
+});
+
+app.delete('/courses/:id', (req, res) => {
+    const courseId = parseInt(req.params.id);
+    const courseIndex = courses.findIndex(c => c.id === courseId);
+    const deletedCourse = courses.splice(courseIndex, 1);
+    res.send(deletedCourse[0]);
 });
 
 app.listen(3000, () => {
