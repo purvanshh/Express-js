@@ -15,17 +15,14 @@ let courses1 = [
     { id: 3, name: 'react native' }
 ];
 
-// Get all courses
 app.get('/courses', (req, res) => {
     res.json(courses);
 });
 
-// Get all courses1
 app.get('/courses1', (req, res) => {
     res.json(courses1);
 });
 
-// Add a new course
 app.post('/courses', (req, res) => {
     console.log(req.body);
     let singlecourse = {
